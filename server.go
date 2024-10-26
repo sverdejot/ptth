@@ -41,6 +41,10 @@ func (s *Server) Listen() error {
 }
 
 func handle(conn net.Conn) {
-	conn.Write([]byte("got a message"))
+	req, err := parseRequest(conn)
+	if err != nil {
+		log.Fatalf("cannot parse request: %v", err)
+	}
+	log.Println(req)
 	conn.Close()
 }
